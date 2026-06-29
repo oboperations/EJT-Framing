@@ -1197,16 +1197,16 @@
     /* ====== ANIMATIONS ====== */
     .fade-up {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
     .fade-up.visible { opacity: 1; transform: none; }
 
     .slide-label {
       opacity: 0;
-      transform: translateX(-12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     .slide-label.visible { opacity: 1; transform: none; }
@@ -1262,7 +1262,7 @@
       }
       .trust-bar        { padding: 2rem 4%; }
       .trust-bar-inner  { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-      .trust-item       { flex-direction: column; text-align: center; gap: 0.75rem; }
+      .trust-item       { flex-direction: column; align-items: center; text-align: center; gap: 0.75rem; }
 
       /* Services */
       .services-grid    { grid-template-columns: 1fr; }
