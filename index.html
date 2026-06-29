@@ -92,6 +92,8 @@
       line-height: 1.65;
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
+      opacity: 0;
+      transition: opacity 0.35s ease;
     }
 
     .site-wrapper { overflow-x: hidden; }
@@ -169,6 +171,8 @@
       transition: all 0.2s ease;
       text-decoration: none;
     }
+
+    .btn:active, .btn-white:active { transform: scale(0.97); }
 
     .btn-primary { background: var(--accent); color: #ffffff !important; }
 
@@ -286,8 +290,13 @@
       height: 2px;
       background: var(--white);
       border-radius: 2px;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      transform-origin: center;
     }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     .mobile-menu {
       display: none;
@@ -1817,6 +1826,11 @@
 <script>
   const FORM_ENDPOINT = '[INSERT FORM ENDPOINT]'; // <!-- [ASSUMED — VERIFY] Replace with your Make.com or webhook URL before launch
 
+  /* ---- PAGE LOAD FADE IN ---- */
+  window.addEventListener('load', () => {
+    document.body.style.opacity = '1';
+  });
+
   /* ---- NAV SCROLL ---- */
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -1832,12 +1846,16 @@
   function openMobileMenu() {
     mobileMenu.classList.add('open');
     menuBackdrop.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
     if (chatWidget) chatWidget.style.display = 'none';
   }
 
   function closeMobileMenu() {
     mobileMenu.classList.remove('open');
     menuBackdrop.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
     if (chatWidget) chatWidget.style.display = '';
   }
 
@@ -1878,23 +1896,26 @@
   const chatIcon   = document.getElementById('chatIcon');
   const chatEstimateLink = document.getElementById('chatEstimateLink');
 
+  function closeChatPanel() {
+    chatPanel.classList.remove('open');
+    chatIcon.textContent = 'chat';
+    document.body.style.overflow = '';
+  }
+
   chatBubble.addEventListener('click', () => {
     const isOpen = chatPanel.classList.toggle('open');
     chatIcon.textContent = isOpen ? 'close' : 'chat';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
-  chatEstimateLink.addEventListener('click', () => {
-    chatPanel.classList.remove('open');
-    chatIcon.textContent = 'chat';
-  });
+  chatEstimateLink.addEventListener('click', closeChatPanel);
 
   /* Tap anywhere outside chat widget to close */
   document.addEventListener('click', (e) => {
     if (chatPanel.classList.contains('open') &&
         !chatBubble.contains(e.target) &&
         !chatPanel.contains(e.target)) {
-      chatPanel.classList.remove('open');
-      chatIcon.textContent = 'chat';
+      closeChatPanel();
     }
   });
 
