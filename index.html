@@ -305,6 +305,33 @@
 
     .mobile-menu.open { display: flex; }
 
+    .menu-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 98;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .menu-backdrop.open {
+      display: block;
+      opacity: 1;
+    }
+
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 98;
+      backdrop-filter: blur(2px);
+      transition: opacity 0.2s;
+    }
+
+    .menu-overlay.open { display: block; }
+
     .mobile-menu a {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1rem;
@@ -1326,6 +1353,12 @@
     </div>
   </nav>
 
+  <!-- MENU OVERLAY -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- MENU BACKDROP -->
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#services" onclick="closeMobileMenu()">Services</a>
@@ -1791,17 +1824,20 @@
   }, { passive: true });
 
   /* ---- HAMBURGER ---- */
-  const hamburger   = document.getElementById('hamburger');
-  const mobileMenu  = document.getElementById('mobileMenu');
-  const chatWidget  = document.querySelector('.chat-widget');
+  const hamburger    = document.getElementById('hamburger');
+  const mobileMenu   = document.getElementById('mobileMenu');
+  const menuBackdrop = document.getElementById('menuBackdrop');
+  const chatWidget   = document.querySelector('.chat-widget');
 
   function openMobileMenu() {
     mobileMenu.classList.add('open');
+    menuBackdrop.classList.add('open');
     if (chatWidget) chatWidget.style.display = 'none';
   }
 
   function closeMobileMenu() {
     mobileMenu.classList.remove('open');
+    menuBackdrop.classList.remove('open');
     if (chatWidget) chatWidget.style.display = '';
   }
 
@@ -1809,11 +1845,14 @@
     mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
   });
 
-  /* Tap anywhere outside mobile menu to close */
+  /* Tap backdrop or anywhere outside menu to close */
+  menuBackdrop.addEventListener('click', closeMobileMenu);
+
   document.addEventListener('click', (e) => {
     if (mobileMenu.classList.contains('open') &&
         !mobileMenu.contains(e.target) &&
-        !hamburger.contains(e.target)) {
+        !hamburger.contains(e.target) &&
+        !menuBackdrop.contains(e.target)) {
       closeMobileMenu();
     }
   });
