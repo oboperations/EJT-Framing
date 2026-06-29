@@ -6,13 +6,14 @@
   <title>EJT Framing Inc. — Framing Contractor in Jacksonville, FL</title>
   <meta name="description" content="EJT Framing Inc. delivers expert residential and commercial framing in Jacksonville, FL. 20+ years experience, code-compliant work, free estimates.">
   <meta name="robots" content="index, follow">
+  <link rel="icon" href="assets/favicon.png">
   <link rel="canonical" href="https://ejtframing.com/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="EJT Framing Inc. — Framing Contractor in Jacksonville, FL">
   <meta property="og:description" content="EJT Framing Inc. delivers expert residential and commercial framing in Jacksonville, FL. 20+ years experience, code-compliant work, free estimates.">
-  <meta property="og:image" content="https://framerusercontent.com/images/aksxfc2HYfWjpN9F3vxbe17n0.jpg">
+  <meta property="og:image" content="assets/social-preview.png">
   <meta property="og:url" content="https://ejtframing.com/">
   <meta property="og:site_name" content="EJT Framing Inc.">
   <meta name="twitter:card" content="summary_large_image">
@@ -1197,16 +1198,16 @@
     /* ====== ANIMATIONS ====== */
     .fade-up {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(12px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .fade-up.visible { opacity: 1; transform: none; }
 
     .slide-label {
       opacity: 0;
-      transform: translateX(-10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateX(-6px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
     }
 
     .slide-label.visible { opacity: 1; transform: none; }
@@ -1831,10 +1832,10 @@
       if (!entry.isIntersecting) return;
       const siblings = Array.from(entry.target.parentElement.querySelectorAll('.fade-up'));
       const idx = siblings.indexOf(entry.target);
-      setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+      setTimeout(() => entry.target.classList.add('visible'), idx * 50);
       fadeObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.08 });
 
   const labelObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
